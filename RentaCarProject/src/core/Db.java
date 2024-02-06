@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Db {     // Singleton pattern  -  only one instance of the class can be created        // Değerlendirme 6
+public class Db {
+    // Singleton Design Pattern
+    // Database connection
     private static Db instance = null;
     private Connection connection = null;
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/HotelManagementSystemDatabase";
+    private final String DB_URL = "jdbc:postgresql://localhost:5432/rentacar";
     private final String DB_USERNAME = "postgres";
     private final String DB_PASS = "6378";
 

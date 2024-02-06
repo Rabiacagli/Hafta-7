@@ -6,7 +6,12 @@ import core.Helper;
 import entity.Season;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeasonView extends Layout {
@@ -24,17 +29,27 @@ public class SeasonView extends Layout {
     private JComboBox cmb_hotel_name;
     private Season season;
     private SeasonManager seasonManager;
-    private HotelManager hotelManager = new HotelManager();
+    private HotelManager hotelManager;
+    private int hotelId;
 
 
     public SeasonView(Season season) {
         this.season = season;
         this.seasonManager = new SeasonManager();
+        this.hotelManager = new HotelManager();
         this.add(contanier);
         this.guiInitiliaze(300, 400);
 
         List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
         cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
+
+        cmb_hotel_name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                String secilenOtelAdi = (String) cmb_hotel_name.getSelectedItem();
+                hotelId = hotelManager.getByHotelId(secilenOtelAdi);
+            }
+        });
 
 
         if (this.season.getSeasonId() != 0) {
@@ -44,13 +59,15 @@ public class SeasonView extends Layout {
             this.fld_finish_date.setText(String.valueOf(this.season.getFnsh_date()));
             this.fld_season_factor.setText(String.valueOf(this.season.getSeason_factor()));
         }
-        int hotelId = hotelManager.getByHotelId(String.valueOf(cmb_hotel_name.getSelectedItem()));
+
+
 
         this.btn_save.addActionListener(e -> {
             if (Helper.isFieldListEmpty(new JTextField[]{this.fld_strt_day, this.fld_finish_date,this.fld_season_factor})) {
                 Helper.showMsg("fill");
             } else {
                 boolean result;
+
 
                 this.season.setHotelId(hotelId);
                 this.season.setStrt_date(LocalDate.parse(fld_strt_day.getText()));
@@ -73,6 +90,7 @@ public class SeasonView extends Layout {
                 }
             }
         });
+
 
     } // Değerlendirme 11
 }

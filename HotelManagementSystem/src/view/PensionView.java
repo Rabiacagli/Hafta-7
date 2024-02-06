@@ -7,6 +7,8 @@ import entity.Hotel;
 import entity.Pension;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 
 public class PensionView extends Layout {
@@ -23,6 +25,7 @@ public class PensionView extends Layout {
     private Pension pension;
     private PensionManager pensionManager;
     private HotelManager hotelManager = new HotelManager();
+    private int hotelId;
 
     public PensionView(Pension pension) {
 
@@ -34,6 +37,14 @@ public class PensionView extends Layout {
         List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
         cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
 
+        cmb_hotel_name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                String secilenOtelAdi = (String) cmb_hotel_name.getSelectedItem();
+                hotelId = hotelManager.getByHotelId(secilenOtelAdi);
+            }
+        });
+
 
         if (this.pension.getPensionId() != 0) {
 
@@ -43,7 +54,7 @@ public class PensionView extends Layout {
             this.fld_pension_factor.setText(String.valueOf(this.pension.getPensionFactor()));
 
         }
-        int hotelId = hotelManager.getByHotelId(String.valueOf(cmb_hotel_name.getSelectedItem()));
+
 
         this.btn_save.addActionListener(e -> {
             if (Helper.isFieldListEmpty(new JTextField[]{this.fld_pension_factor})) {
