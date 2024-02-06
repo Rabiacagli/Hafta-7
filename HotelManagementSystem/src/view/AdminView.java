@@ -1,16 +1,12 @@
 package view;
 
 import business.UserManager;
-import core.ComboItem;
 import core.Helper;
 import entity.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class AdminView extends Layout {
@@ -18,7 +14,6 @@ public class AdminView extends Layout {
     private JPanel pnl_top;
     private JLabel lbl_welcome;
     private JButton btn_logout;
-    private JTabbedPane tbd_user;
     private JTable tbl_user;
     private JLabel lbl_username;
     private JTextField fld_username;
@@ -27,10 +22,15 @@ public class AdminView extends Layout {
     private JButton btn_user_save;
     private JLabel lbl_pass;
     private JScrollPane scl_left;
+    private JComboBox cmb_filter_role;
+    private JButton btn_ara;
+    private JButton btn_reset;
+    private JButton araButton;
     private User user;
     private UserManager userManager;
     private DefaultTableModel tmdl_user = new DefaultTableModel();
     private JPopupMenu user_menu;
+    private Object[] col_user;
 
     public AdminView(User user) {
         this.userManager = new UserManager();
@@ -45,8 +45,11 @@ public class AdminView extends Layout {
         this.lbl_welcome.setText("Hoşgeldiniz " + this.user.getUsername());
 
         //User
-        loadUserTable();
+        loadUserTable(null);
         loadUserComponent();
+
+
+
         this.btn_user_save.addActionListener(e -> {
 
             boolean result = true;
@@ -64,7 +67,7 @@ public class AdminView extends Layout {
 
                 if (result) {
                     Helper.showMsg("done");
-                    loadUserTable();
+                    loadUserTable(null);
                 } else {
                     Helper.showMsg("error");
                 }
@@ -75,13 +78,37 @@ public class AdminView extends Layout {
                 dispose();
             }
         });
-    }
 
-    public void loadUserTable() {
-        Object[] col_user = {"ID", "Kullanıcı Adı", "Parola", "Rol"};
+        btn_ara.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String role = (String) cmb_filter_role.getSelectedItem();
+                ArrayList<Object[]> userList = userManager.getForTable(col_user.length);
+                ArrayList<Object[]> filteredList = new ArrayList<>();
+                for (Object[] user : userList) {
+                    if (user[3].equals(role)) {
+                        filteredList.add(user);
+                    }
+                }
+                createTable(tmdl_user, tbl_user, col_user, filteredList);
+
+
+
+            }
+        });
+        btn_reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadUserTable(null);
+            }
+        });
+    }    // Değerlendirme 7
+
+    public void loadUserTable(ArrayList<Object[]> UserList) {
+        this.col_user = new Object[] {"ID", "Kullanıcı Adı", "Parola", "Rol"};
         ArrayList<Object[]> userList = this.userManager.getForTable(col_user.length);
         this.createTable(this.tmdl_user, this.tbl_user, col_user, userList);
-    }
+    } // Kullanıcı tablosu
 
     private void loadUserComponent() {
         tableSelectedRow(this.tbl_user);
@@ -94,7 +121,7 @@ public class AdminView extends Layout {
             userView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    loadUserTable();
+                    loadUserTable(null);
                 }
             });
         });
@@ -103,7 +130,7 @@ public class AdminView extends Layout {
                 int selectUserId = this.getTableSelectedRow(this.tbl_user, 0);
                 if (this.userManager.delete(selectUserId)) {
                     Helper.showMsg("done");
-                    loadUserTable();
+                    loadUserTable(null);
                 } else {
                     Helper.showMsg("error");
                 }
@@ -111,5 +138,6 @@ public class AdminView extends Layout {
         });
         this.tbl_user.setComponentPopupMenu(user_menu);
 
-    }
+    } // Kullanıcı bileşenleri
+
 }

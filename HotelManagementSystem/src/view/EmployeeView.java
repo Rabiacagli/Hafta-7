@@ -6,7 +6,6 @@ import entity.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,6 +53,7 @@ public class EmployeeView extends Layout {
     private JLabel lbl_childcount;
     private JScrollPane scrl_rez;
     private JTable tbl_rez;
+    private JButton duzenleButton;
     private User user;
     private Room room;
     private DefaultTableModel tmdl_hotel = new DefaultTableModel();
@@ -118,17 +118,40 @@ public class EmployeeView extends Layout {
         //Room
         loadRoomTable(null);
         loadRoomComponent();
-        btn_add_room.addActionListener(e -> {
 
+
+        btn_add_room.addActionListener(e -> {
             RoomView roomView = new RoomView(new Room());
             roomView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadRoomTable(null);
 
+
                 }
             });
         });
+
+
+            tableSelectedRow(this.tbl_room);
+            duzenleButton.addActionListener(e -> {
+                try {
+                int selectRoomId = this.getTableSelectedRow(this.tbl_room, 0);
+
+
+                RoomView roomView = new RoomView(roomManager.getById(selectRoomId));
+
+                roomView.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        loadRoomTable(null);
+                    }
+                });
+                } catch (Exception a) {
+                    Helper.showMsg("Lütfen Bir Oda Seçiniz!");
+                }
+            });
+
 
 
         //Rez
@@ -156,13 +179,14 @@ public class EmployeeView extends Layout {
                 loadRoomTable(null);
             }
         });
-    }
+
+    }   // Personel Ekranı
 
     public void loadHotelTable() {
         Object[] col_hotel = {"ID", "Otel Adı", "Adres", "Mail", "Telefon", "Yıldız", "Otopark", "Wifi", "Havuz", "Fitness", "Concierge", "Spa", "Oda Servisi"};
         ArrayList<Object[]> hotelList = this.hotelManager.getForTable(col_hotel.length, this.hotelManager.findAll());
         this.createTable(this.tmdl_hotel, this.tbl_hotel, col_hotel, hotelList);
-    }
+    }  // Otel Tablosu
 
     public void loadHotelComponent() {
         tableSelectedRow(this.tbl_hotel);
@@ -205,15 +229,15 @@ public class EmployeeView extends Layout {
         });
         this.tbl_hotel.setComponentPopupMenu(hotel_menu);
 
-    }
+    }  // Otel Tablo Menüsü
 
     public void loadSeasonTable() {
 
-        Object[] col_season = {"ID", "Otel ID", "Başlangıç Tarihi", "Bitiş Tarihi"};
+        Object[] col_season = {"ID", "Otel ID", "Başlangıç Tarihi", "Bitiş Tarihi", "Sezon Faktörü"};
         ArrayList<Object[]> seasonList = this.seasonManager.getForTable(col_season.length, this.seasonManager.findAll());
         this.createTable(this.tmdl_season, this.tbl_season, col_season, seasonList);
 
-    }
+    }  // Sezon Tablosu
 
     public void loadSeasonComponent() {
         tableSelectedRow(this.tbl_season);
@@ -256,15 +280,15 @@ public class EmployeeView extends Layout {
         });
         this.tbl_season.setComponentPopupMenu(season_menu);
 
-    }
+    }   // Sezon Tablo Menüsü
 
     public void loadPensionTable() {
 
-        Object[] col_pension = {"ID", "Otel ID", "Pansiyon Tipi"};
+        Object[] col_pension = {"ID", "Otel ID", "Pansiyon Tipi", "Pansiyon Faktörü"};
         ArrayList<Object[]> pensionList = this.pensionManager.getForTable(col_pension.length, this.pensionManager.findAll());
         this.createTable(this.tmdl_pension, this.tbl_pension, col_pension, pensionList);
 
-    }
+    }   // Pansiyon Tablosu
 
     public void loadPensionComponent() {
         tableSelectedRow(this.tbl_pension);
@@ -307,17 +331,27 @@ public class EmployeeView extends Layout {
         });
         this.tbl_pension.setComponentPopupMenu(pension_menu);
 
-    }
+    }    // Pansiyon Tablo Menüsü
 
     public void loadRoomTable(ArrayList<Object[]> roomList) {
-
         this.col_room = new Object[]{"ID", "Otel Adı", "Pansiyon Tipi", "Oda Tipi", "Stok", "Yetişkin Fiyatı", "Çocuk Fiyatı", "Yatak Sayısı", "Metrekare", "TV", "Minibar", "Konsol", "Kasa", "Projeksiyon", "Otel ID"};
-        if (roomList == null) {
-
-            roomList = this.roomManager.getForTable(col_room.length, this.roomManager.findAll());
+        // Stok kontrollü tablo oluşturma
+        if (roomList == null || roomList.isEmpty()) {
+            roomList = new ArrayList<>();
+            this.createTable(this.tmdl_room, this.tbl_room, col_room, roomList);
+        } else {
+            ArrayList<Object[]> filteredRoomList = new ArrayList<>();
+            for (Object[] room : roomList) {
+                int stock = (int) room[4];
+                if (stock > 0) {
+                    filteredRoomList.add(room);
+                }
+            }
+            this.createTable(this.tmdl_room, this.tbl_room, col_room, filteredRoomList);
         }
-        this.createTable(this.tmdl_room, this.tbl_room, col_room, roomList);
-    }
+    }  // Oda Tablosu
+
+
     public void loadSearchTable() {
         ArrayList<Room> roomListBySearch = this.roomManager.searchForTable(
                 fld_room_hotel_name.getText(),
@@ -330,7 +364,8 @@ public class EmployeeView extends Layout {
 
         ArrayList<Object[]> roomRowListBySearch = this.roomManager.getForTable(this.col_room.length, roomListBySearch);
         loadRoomTable(roomRowListBySearch);
-    }
+    }   // Oda Arama // Değerlendirme 15 - 16 - 17 Fiyat Hesaplama Helper sınıfında yapıldı
+
     public void loadReservationTable(ArrayList<Object[]> reservationList) {
 
         this.col_reservation = new Object[]{"ID", "Oda ID", "Giriş Tarihi", "Çıkış Tarihi", "Toplam Tutar", "Misafir Sayısı", "Misafir Adı", "Misafir ID", "Misafir Mail", "Misafir Telefon No"};
@@ -339,37 +374,50 @@ public class EmployeeView extends Layout {
             reservationList = this.reservationManager.getForTable(col_reservation.length, this.reservationManager.findAll());
         }
         this.createTable(this.tmdl_reservation, this.tbl_rez, col_reservation, reservationList);
-    }
+    }  // Rezervasyon Tablosu Değerlendirme 20
 
     public void loadRoomComponent() {
+
         tableSelectedRow(this.tbl_room);
 
         this.rez_menu = new JPopupMenu();
         this.rez_menu.add("Yeni Rezervasyon Yap").addActionListener(e -> {
-            int selectrezId = this.getTableSelectedRow(this.tbl_room, 0);
-            ReservationView reservationView = new ReservationView(this.roomManager.getById(selectrezId));
-            reservationView.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    loadReservationTable(null);
+            if (!fld_room_checkin.getText().isEmpty() && !fld_room_checkout.getText().isEmpty() && !fld_room_adult_count.getText().isEmpty() && !fld_room_child_count.getText().isEmpty()) {
 
-                }
-            });
+                int selectrezId = this.getTableSelectedRow(this.tbl_room, 0);
+                String giris = fld_room_checkin.getText();
+                String cikis = fld_room_checkout.getText();
+                int yetişkinSayisi = Integer.parseInt(fld_room_adult_count.getText());
+                int cocukSayisi = Integer.parseInt(fld_room_child_count.getText());
+
+                ReservationView reservationView = new ReservationView(new Reservation(0), this.roomManager.getById(selectrezId), giris, cikis, yetişkinSayisi, cocukSayisi);
+                reservationView.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        loadReservationTable(null);
+                        loadRoomTable(null);
+
+                    }
+                });
+            } else {
+                Helper.showMsg("Lütfen Giriş - Çıkış Tarihlerini\nVE\nKonaklayacak Kişi Sayılarını Giriniz");
+            }
         });
         this.tbl_room.setComponentPopupMenu(rez_menu);
-    }
+    }  // Oda Tablo Menüsü
 
     public void loadRezComponent() {
         tableSelectedRow(this.tbl_rez);
 
         this.rez_menu2 = new JPopupMenu();
-        this.rez_menu2.add("Güncelle").addActionListener(e -> {
+        this.rez_menu2.add("Rezervasyon Güncelle").addActionListener(e -> {
             int selectrezId = this.getTableSelectedRow(this.tbl_rez, 0);
             ReservationView reservationView = new ReservationView(this.reservationManager.getById(selectrezId));
             reservationView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                   loadReservationTable(null);
+                    loadReservationTable(null);
+                    loadRoomTable(null);
 
                 }
             });
@@ -378,9 +426,12 @@ public class EmployeeView extends Layout {
         this.rez_menu2.add("Sil").addActionListener(e -> {
             if (Helper.confirm("sure")) {
                 int selectrezId = this.getTableSelectedRow(this.tbl_rez, 0);
+                int room_id = this.reservationManager.getById(selectrezId).getRoom_id();
                 if (this.reservationManager.delete(selectrezId)) {
                     Helper.showMsg("done");
+                    roomManager.updateStock(room_id, 1);
                     loadReservationTable(null);
+                    loadRoomTable(null);
 
                 } else {
                     Helper.showMsg("error");
@@ -389,7 +440,7 @@ public class EmployeeView extends Layout {
         });
         this.tbl_rez.setComponentPopupMenu(rez_menu2);
 
-    }
+    } // Rezervasyon Tablo Menüsü
 }
 
 

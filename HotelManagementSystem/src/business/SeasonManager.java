@@ -26,6 +26,7 @@ public class SeasonManager {
                 rowObject[i++] = obj.getHotelId();
                 rowObject[i++] = obj.getStrt_date();
                 rowObject[i++] = obj.getFnsh_date();
+                rowObject[i++] = obj.getSeason_factor();
 
 
                 seasonObjList.add(rowObject);

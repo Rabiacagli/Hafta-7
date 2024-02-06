@@ -5,6 +5,8 @@ import dao.RoomDao;
 import entity.Hotel;
 import entity.Room;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,8 +97,9 @@ public class RoomManager {
         }
 
         if (checkIn != null && !checkIn.isEmpty() && checkOut != null && !checkOut.isEmpty()) {
-            whereList.add("season.baslangic BETWEEN '" + checkIn + "' AND '" + checkOut + "'");
+            whereList.add(("'" + checkIn +"' >= season.baslangic AND '"+ checkOut +"' <= season.bitis"));
         }
+
         int totalCount = adultCount + childCount;
         if (totalCount != 0) {
             whereList.add("room.bed_capacity >=" + (totalCount));
@@ -111,6 +114,9 @@ public class RoomManager {
 
     }
 
+    public void updateStock(int roomId,int roomCount) {
+        this.roomDao.updateStock(roomId,roomCount);
+    }
 
 }
 

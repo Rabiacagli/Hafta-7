@@ -4,11 +4,9 @@ import core.Db;
 import entity.Hotel;
 import entity.Hotel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HotelDao {
     private final Connection conn;
@@ -189,6 +187,22 @@ public class HotelDao {
             e.printStackTrace();
         }
         return hotelId;
+    }
+
+    public List<String> getTumOtelIsimleri() {
+        List<String> otelIsimleri = new ArrayList<>();
+        String query = "SELECT hotel_name FROM public.hotel";  // Uyarlanmış sorgu
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                otelIsimleri.add(rs.getString("hotel_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return otelIsimleri;
     }
 
 

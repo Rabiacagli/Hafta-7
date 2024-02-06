@@ -2,6 +2,11 @@ package core;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 
 public class Helper {
@@ -89,4 +94,24 @@ public class Helper {
         UIManager.put("OptionPane.noButtonText", "Hayır");
         UIManager.put("OptionPane.cancelButtonText", "İptal");
     }
+
+    public static double CalculatePrice(double seasonFactor, double pensionFactor, int days, int adultcount, int childcount, double adultPrice, double childPrice) {
+        return (((adultcount * adultPrice) + (childcount * childPrice)) * seasonFactor * pensionFactor * days);
+    }
+
+    public static int calculateDays(String checkin, String checkout) {
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int days = 0;
+        try {
+            Date date1 = myFormat.parse(checkin);
+            Date date2 = myFormat.parse(checkout);
+            long difference = date2.getTime() - date1.getTime();
+            days = (int) ChronoUnit.DAYS.between(LocalDate.parse(checkin), LocalDate.parse(checkout));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
+    }
+
+
 }

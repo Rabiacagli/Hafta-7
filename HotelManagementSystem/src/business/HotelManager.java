@@ -4,7 +4,9 @@ import core.Helper;
 import dao.HotelDao;
 import entity.Hotel;
 
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HotelManager {
     private final HotelDao hotelDao;
@@ -72,6 +74,9 @@ public class HotelManager {
             return false;
         }
         return this.hotelDao.delete(id);
+    }
+    public List<String> getTumOtelIsimleri(){
+        return this.hotelDao.getTumOtelIsimleri();
     }
 
 }

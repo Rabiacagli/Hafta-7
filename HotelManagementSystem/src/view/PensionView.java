@@ -1,10 +1,13 @@
 package view;
 
+import business.HotelManager;
 import business.PensionManager;
 import core.Helper;
+import entity.Hotel;
 import entity.Pension;
 
 import javax.swing.*;
+import java.util.List;
 
 public class PensionView extends Layout {
     private JPanel contanier;
@@ -14,32 +17,43 @@ public class PensionView extends Layout {
     private JLabel lbl_pension_type;
     private JLabel lbl_top;
     private JTextField fld_hotelid;
+    private JTextField fld_pension_factor;
+    private JLabel lbl_pansion_factor;
+    private JComboBox cmb_hotel_name;
     private Pension pension;
     private PensionManager pensionManager;
+    private HotelManager hotelManager = new HotelManager();
 
     public PensionView(Pension pension) {
 
         this.pension = pension;
         this.pensionManager = new PensionManager();
         this.add(contanier);
-        this.guiInitiliaze(300, 250);
+        this.guiInitiliaze(300, 300);
+
+        List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
+        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
 
 
         if (this.pension.getPensionId() != 0) {
 
-            this.fld_hotelid.setText(String.valueOf(this.pension.getHotelId()));
+            String hotelName = hotelManager.getByName(this.pension.getHotelId());
+            this.cmb_hotel_name.setSelectedItem(hotelName);
             this.cmb_pension_type.setSelectedItem(this.pension.getPensionType());
+            this.fld_pension_factor.setText(String.valueOf(this.pension.getPensionFactor()));
 
         }
+        int hotelId = hotelManager.getByHotelId(String.valueOf(cmb_hotel_name.getSelectedItem()));
 
         this.btn_save.addActionListener(e -> {
-            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_hotelid})) {
+            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_pension_factor})) {
                 Helper.showMsg("fill");
             } else {
                 boolean result;
 
-                this.pension.setHotelId(Integer.parseInt(fld_hotelid.getText()));
+                this.pension.setHotelId(hotelId);
                 this.pension.setPensionType((String) cmb_pension_type.getSelectedItem());
+                this.pension.setPensionFactor(Double.parseDouble(fld_pension_factor.getText()));
 
 
                 if (this.pension.getPensionId() != 0) {
@@ -58,5 +72,5 @@ public class PensionView extends Layout {
             }
         });
 
-    }
+    }  // Değerlendirme 10
 }

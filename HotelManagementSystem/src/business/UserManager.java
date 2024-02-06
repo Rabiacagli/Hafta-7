@@ -31,7 +31,6 @@ public class UserManager {
         }
         return userRowList;
     }
-
     public ArrayList<User> findAll() {
         return this.userDao.findAll();
     }
@@ -58,5 +57,6 @@ public class UserManager {
         }
         return this.userDao.delete(id);
     }
+
 
 }

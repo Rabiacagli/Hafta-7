@@ -5,7 +5,11 @@ import dao.ReservationDao;
 import dao.RoomDao;
 import entity.Reservation;
 import entity.Reservation;
+import entity.Room;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReservationManager {
@@ -67,5 +71,12 @@ public class ReservationManager {
             }
             return this.reservationDao.delete(id);
         }
+
+    public double searchForSeasonFactor(int hotel_id, String giris, String cikis) {
+        return this.reservationDao.searchForSeasonFactor(hotel_id, giris, cikis);
+    }
+    public double searchForPensionFactor(int hotel_id,String type) {
+        return this.reservationDao.searchForPensionFactor(hotel_id,type);
+    }
 
 }

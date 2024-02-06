@@ -182,5 +182,20 @@ public class RoomDao {
         return roomList;
     }
 
+    public void updateStock(int roomId,int roomCount) {
+        String updateQuery = "UPDATE public.room SET stock = stock + ? WHERE room_id = ?";
+
+        try {
+            // Stok azaltma işlemi yap
+            PreparedStatement updateStatement = this.conn.prepareStatement(updateQuery);
+            updateStatement.setInt(1, roomCount);
+            updateStatement.setInt(2, roomId);
+            updateStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

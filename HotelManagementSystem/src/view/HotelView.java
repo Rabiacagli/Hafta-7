@@ -66,7 +66,7 @@ public class HotelView extends Layout {
 
                 this.hotel.setName(fld_hotelname.getText());
                 this.hotel.setAddress(fld_hoteladres.getText());
-                this.hotel.setPhone(fld_hoteladres.getText());
+                this.hotel.setPhone(fld_hoteltel.getText());
                 this.hotel.setMail(fld_hotelmail.getText());
                 this.hotel.setStar((String) cmb_hotel_star.getSelectedItem());
                 this.hotel.setCarPark(btn_carpark.isSelected());
@@ -94,6 +94,6 @@ public class HotelView extends Layout {
                     Helper.showMsg("error");
                 }
             }
-        });
+        }); // Değerlendirme 10
     }
 }

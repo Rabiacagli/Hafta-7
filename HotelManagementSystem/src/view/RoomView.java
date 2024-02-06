@@ -5,12 +5,17 @@ import business.PensionManager;
 import business.RoomManager;
 import business.SeasonManager;
 import core.Helper;
+import dao.HotelDao;
 import entity.Hotel;
 import entity.Pension;
 import entity.Room;
 import entity.Season;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomView extends Layout {
     private JPanel contanier;
@@ -38,6 +43,8 @@ public class RoomView extends Layout {
     private JTextField fld_metrekare;
     private JLabel lbl_square;
     private JComboBox cmb_room_type;
+    private JComboBox cmb_hotel_name;
+    private JComboBox cmb_hotel_pension;
     private JTextField fld_otel_id;
     private Room room;
     private RoomManager roomManager;
@@ -48,7 +55,9 @@ public class RoomView extends Layout {
     private Season season;
     private SeasonManager seasonManager;
 
+
     public RoomView(Room room) {
+        this.room = room;
         this.hotel = hotel;
         this.hotelManager = new HotelManager();
         this.pension = pension;
@@ -61,16 +70,53 @@ public class RoomView extends Layout {
         this.guiInitiliaze(500, 500);
 
 
+
+
+        List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
+        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
+
+
+        cmb_hotel_name.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String secilenOtelAdi = (String) cmb_hotel_name.getSelectedItem();
+                int hotelId = hotelManager.getByHotelId(secilenOtelAdi);
+
+                // Seçilen otel için ait olan pensionları cmb_hotel_pension'a ekle
+                ArrayList<String> pensionlar = pensionManager.getOteleAitPensionlar(hotelId);
+                cmb_hotel_pension.setModel(new DefaultComboBoxModel<>(pensionlar.toArray(new String[0])));
+            }
+        });
+
+        if (this.room.getRoom_id() != 0){
+
+            this.cmb_hotel_name.setSelectedItem(this.room.getHotel_name());
+            this.cmb_hotel_pension.setSelectedItem(this.room.getPension_type());
+            this.cmb_room_type.setSelectedItem(this.room.getRoom_type());
+            this.fld_stock.setText(String.valueOf(this.room.getStock()));
+            this.fld_adult_price.setText(String.valueOf(this.room.getAdult_price()));
+            this.fld_child_price.setText(String.valueOf(this.room.getChild_price()));
+            this.fld_bed_capacity.setText(String.valueOf(this.room.getBed_capacity()));
+            this.fld_metrekare.setText(this.room.getMkare());
+            this.btn_kasa.setSelected(this.room.isKasa());
+            this.btn_konsol.setSelected(this.room.isKonsol());
+            this.btn_tv.setSelected(this.room.isTv());
+            this.btn_minibar.setSelected(this.room.isMinibar());
+            this.btn_projeksiyon.setSelected(this.room.isProjeksiyon());
+        }
+
+
         this.btn_save.addActionListener(e -> {
-            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_hotel_name, this.fld_pension_type, this.fld_adult_price, this.fld_child_price, this.fld_bed_capacity, this.fld_metrekare})) {
+            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_adult_price, this.fld_child_price, this.fld_bed_capacity, this.fld_metrekare})) {
                 Helper.showMsg("fill");
             } else {
                 boolean result;
 
-                int hotelId = hotelManager.getByHotelId(fld_hotel_name.getText());
+                int hotelId = hotelManager.getByHotelId(String.valueOf(cmb_hotel_name.getSelectedItem()));
                 this.room.setHotel_id(hotelId);
-                this.room.setHotel_name(fld_hotel_name.getText());
-                this.room.setPension_type(fld_pension_type.getText());
+                this.room.setHotel_name(String.valueOf(cmb_hotel_name.getSelectedItem()));
+                this.room.setPension_type(String.valueOf(cmb_hotel_pension.getSelectedItem()));
                 this.room.setRoom_type((String) cmb_room_type.getSelectedItem());
                 this.room.setStock(Integer.parseInt(fld_stock.getText()));
                 this.room.setAdult_price(Double.parseDouble(fld_adult_price.getText()));
@@ -99,6 +145,6 @@ public class RoomView extends Layout {
                     Helper.showMsg("error");
                 }
             }
-        });
+        });   // Değerlendirme 13 - 14
     }
 }

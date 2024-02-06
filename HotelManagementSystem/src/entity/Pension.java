@@ -4,13 +4,15 @@ public class Pension {
         private int pensionId;
         private int hotelId;
         private String pensionType;
+        private double pension_factor;
 
     public Pension() {
     }
-    public Pension(int pensionId, int hotelId, String pensionType) {
+    public Pension(int pensionId, int hotelId, String pensionType,double pension_factor) {
         this.pensionId = pensionId;
         this.hotelId = hotelId;
         this.pensionType = pensionType;
+        this.pension_factor = pension_factor;
     }
 
     public int getPensionId() {
@@ -35,6 +37,12 @@ public class Pension {
 
     public void setPensionType(String pensionType) {
         this.pensionType = pensionType;
+    }
+    public double getPensionFactor() {
+        return pension_factor;
+    }
+    public void setPensionFactor(double pension_factor) {
+        this.pension_factor = pension_factor;
     }
 }
 

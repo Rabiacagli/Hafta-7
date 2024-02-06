@@ -44,5 +44,5 @@ public class LoginView extends Layout{
                 }
             }
         });
-    }
+    }       // Değerlendirme 7 - 8 - 9
 }

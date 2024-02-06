@@ -23,6 +23,7 @@ public class PensionManager {
             rowObject[i++] = obj.getPensionId();
             rowObject[i++] = obj.getHotelId();
             rowObject[i++] = obj.getPensionType();
+            rowObject[i++] = obj.getPensionFactor();
 
             pensionObjList.add(rowObject);
         }
@@ -57,6 +58,10 @@ public class PensionManager {
             return false;
         }
         return this.pensionDao.delete(id);
+    }
+
+    public ArrayList<String> getOteleAitPensionlar(int hotelId ){
+        return this.pensionDao.getOteleAitPensionlar(hotelId);
     }
 
 }
