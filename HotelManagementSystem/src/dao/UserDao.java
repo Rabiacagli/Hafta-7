@@ -16,8 +16,7 @@ public class UserDao {
         this.conn = Db.getInstance();
     }
 
-
-
+    //Tüm kullanıcıları veritabanından getirir ve bir ArrayList içinde döndürür.
     public ArrayList<User> findAll() {
         ArrayList<User> userList = new ArrayList<>();
         String query = "SELECT * FROM public.user ORDER BY user_id ASC";
@@ -32,6 +31,8 @@ public class UserDao {
         return userList;
     }
 
+    // Kullanıcı adı ve şifreye göre kullanıcıyı bulur.
+    // Kullanıcı adı ve şifre doğruysa ilgili kullanıcı nesnesini döndürür, aksi takdirde null değerini döndürür.
     public User findByLogin(String username, String password) {
         User obj = null;
         String query = "SELECT * FROM public.user WHERE user_name = ? AND user_pass = ?";
@@ -49,6 +50,7 @@ public class UserDao {
         return obj;
     }
 
+    //Bir ResultSet içindeki satırları User nesnelerine dönüştürmek için kullanılan yardımcı bir metoddur.
     public User match (ResultSet rs) throws SQLException {
         User obj = new User();
         obj.setId(rs.getInt("user_id"));
@@ -60,7 +62,7 @@ public class UserDao {
 
     }
 
-    public boolean save(User user) {
+    public boolean save(User user) {  //Yeni bir kullanıcı kaydı oluşturur ve veritabanına ekler.
         String query = "INSERT INTO public.user " +
                 "(" +
                 "user_name,"  +
@@ -82,7 +84,7 @@ public class UserDao {
         return true;
     }
 
-    public boolean update(User user) {
+    public boolean update(User user) { //Varolan bir kullanıcı kaydını günceller.
         String query = "UPDATE public.user SET " +
                 "user_name = ? ," +
                 "user_pass = ? , " +
@@ -104,7 +106,7 @@ public class UserDao {
         return true;
     }
 
-    public boolean delete(int user_id) {
+    public boolean delete(int user_id) { // Belirli bir kullanıcı kaydını veritabanından siler
         String query = "DELETE FROM public.user WHERE user_id = ?";
         try {
             PreparedStatement pr = this.conn.prepareStatement(query);
@@ -116,7 +118,7 @@ public class UserDao {
         return true;
     }
 
-    public User getById(int id) {
+    public User getById(int id) {  //Belirli bir kullanıcı ID'sine göre kullanıcı bilgilerini getirir.
         User obj= null;
         String query = "SELECT * FROM public.user WHERE user_id = ?";
         try {

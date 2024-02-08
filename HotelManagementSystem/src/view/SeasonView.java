@@ -40,7 +40,7 @@ public class SeasonView extends Layout {
         this.add(contanier);
         this.guiInitiliaze(300, 400);
 
-        List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
+        List<String> otelIsimleri = hotelManager.getAllHotelsName();
         cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
 
         cmb_hotel_name.addItemListener(new ItemListener() {

@@ -20,6 +20,8 @@ public class UserView extends Layout {
     private UserManager userManager;
     private User user;
 
+    //Kullanıcı hesabı bilgilerini görüntülemek ve düzenlemek için bir UserView örneği oluşturur.
+    // Verilen User nesnesi üzerinden kullanıcı hesabı bilgileri alınır ve GUI bileşenlerine yerleştirilir.
     public UserView(User user) {
         this.user = user;
         this.userManager = new UserManager();
@@ -32,6 +34,10 @@ public class UserView extends Layout {
             this.fld_pass.setText(this.user.getPassword());
         }
 
+        //Kaydet butonuna basıldığında, GUI'deki alanlardan kullanıcı hesabı bilgileri alınır ve bu bilgiler User nesnesine atanır.
+        // Daha sonra bu bilgilerin doğruluğu kontrol edilir ve gerekirse kullanıcıya bir mesaj gösterilir.
+        // Son olarak, değişiklikler veritabanında güncellenir veya yeni bir kullanıcı hesabı oluşturulur.
+        // Sonuç duruma göre kullanıcıya bir mesaj gösterilir ve pencere kapatılır.
         this.btn_save.addActionListener(e -> {
             if (Helper.isFieldListEmpty(new JTextField[]{this.fld_username, this.fld_pass})) {
                 Helper.showMsg("fill");

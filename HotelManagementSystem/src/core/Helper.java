@@ -10,7 +10,7 @@ import java.util.Date;
 
 
 public class Helper {
-    public static void setTheme() {
+    public static void setTheme() {    // kullanıcı tarafındaki göünecek tablo için tema oluşmasını sağlar
 
         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
@@ -24,32 +24,32 @@ public class Helper {
         }
     }
 
-    public static void showMsg(String str) {
+    public static void showMsg(String str) {   // Kullanıcıyı yönlendirmek  bir takım mesajlar veririz, diğer sınıf ve tablolarda da kullanırız
 
-        optionPaneTR();
+
         String msg;
         String title;
 
         switch (str) {
             case "fill" -> {
-                msg = "Lütfen tüm alanları doldurunuz!";
-                title = "Hata";
+                msg = "Please fill all blanks!";
+                title = "Error";
             }
             case "done" -> {
-                msg = "İşlem başarılı!";
-                title = "Sonuç";
+                msg = "Successful!";
+                title = "Result";
             }
             case "notFound" -> {
-                msg = "Kayıt bulunamadı!";
-                title = "Bulunamadı";
+                msg = "Not found!";
+                title = "Not found";
             }
             case "error" -> {
-                msg = "Hatalı İşlem Yaptınız!";
-                title = "Hata";
+                msg = "Wrong action!";
+                title = "Error";
             }
             default -> {
                 msg = str;
-                title = "Bilgilendirme";
+                title = "Information";
             }
         }
         JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
@@ -59,18 +59,20 @@ public class Helper {
         String msg;
 
         if (str.equals("sure")) {
-            msg = "Silmek İstediğinize Emin misiniz?";
+            msg = "Are you sure, you want to delete?";
         } else {
             msg = str;
         }
 
-        return JOptionPane.showConfirmDialog(null, msg, "Uyarı", JOptionPane.YES_NO_OPTION) == 0;
+        return JOptionPane.showConfirmDialog(null, msg, "Warning", JOptionPane.YES_NO_OPTION) == 0;
     }
 
+    // view ekranında metin alanının boş olup olmadığını kontrol eder
     public static boolean isFieldEmpty(JTextField fld) {
         return fld.getText().trim().isEmpty();
     }
 
+    // view ekranındaki metin alanlarını Arraylistte tutar ve hepsini kontrol eder
     public static boolean isFieldListEmpty(JTextField[] fieldList) {
         for (JTextField field : fieldList) {
             if (isFieldEmpty(field)) {
@@ -80,6 +82,8 @@ public class Helper {
         return false;
     }
 
+
+    // pencerenin ekran üzerindeki konumunu belirler
     public static int getLocationPoint(String type, Dimension size) {
         return switch (type) {
             case "x" -> (Toolkit.getDefaultToolkit().getScreenSize().width - size.width) / 2;
@@ -88,17 +92,14 @@ public class Helper {
         };
     }
 
-    public static void optionPaneTR() {
-        UIManager.put("OptionPane.okButtonText", "Tamam");
-        UIManager.put("OptionPane.yesButtonText", "Evet");
-        UIManager.put("OptionPane.noButtonText", "Hayır");
-        UIManager.put("OptionPane.cancelButtonText", "İptal");
-    }
 
+    // tüm değişkenlerle  fiyat hesaplaması yapılır
     public static double CalculatePrice(double seasonFactor, double pensionFactor, int days, int adultcount, int childcount, double adultPrice, double childPrice) {
         return (((adultcount * adultPrice) + (childcount * childPrice)) * seasonFactor * pensionFactor * days);
     }
 
+
+    //misafirlerin giriş ve çıkış tarihleri arasındaki kalış süresini hesaplamak için kullanılır.
     public static int calculateDays(String checkin, String checkout) {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         int days = 0;
@@ -112,6 +113,4 @@ public class Helper {
         }
         return days;
     }
-
-
 }

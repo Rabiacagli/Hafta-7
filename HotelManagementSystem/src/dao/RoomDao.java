@@ -6,6 +6,7 @@ import entity.Room;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoomDao {
     private final Connection conn;
@@ -14,6 +15,7 @@ public class RoomDao {
         this.conn = Db.getInstance();
     }
 
+    //Tüm odaları veritabanından getirir ve bir ArrayList içinde döndürür
     public ArrayList<Room> findAll() {
         ArrayList<Room> roomList = new ArrayList<>();
         String query = "SELECT * FROM public.room ORDER BY room_id ASC";
@@ -28,6 +30,7 @@ public class RoomDao {
         return roomList;
     }
 
+    // Bir ResultSet içindeki satırları Room nesnelerine dönüştürmek için kullanılan yardımcı bir metoddur.
     public Room match(ResultSet rs) throws SQLException {
         Room obj = new Room();
         obj.setRoom_id(rs.getInt("room_id"));
@@ -51,11 +54,12 @@ public class RoomDao {
 
     }
 
+    //Yeni bir oda kaydı oluşturur ve veritabanına ekler.
     public boolean save(Room room) {
         String query = "INSERT INTO public.room " +
                 "(" +
-                "hotel_name," +
                 "pension_type," +
+                "hotel_name," +
                 "room_type," +
                 "stock," +
                 "adult_price," +
@@ -74,8 +78,8 @@ public class RoomDao {
 
         try {
             PreparedStatement pr = this.conn.prepareStatement(query);
-            pr.setString(1, room.getHotel_name());
-            pr.setString(2, room.getPension_type());
+            pr.setString(1, room.getPension_type());
+            pr.setString(2,room.getHotel_name());
             pr.setString(3, room.getRoom_type());
             pr.setInt(4, room.getStock());
             pr.setDouble(5, room.getAdult_price());
@@ -96,10 +100,11 @@ public class RoomDao {
         return true;
     }
 
+    //Varolan bir oda kaydını günceller
     public boolean update(Room room) {
         String query = "UPDATE public.room SET " +
-                "hotel_name = ? ," +
                 "pension_type = ? , " +
+                "hotel_name = ? , " +
                 "room_type = ? , " +
                 "stock = ? , " +
                 "adult_price = ? , " +
@@ -118,8 +123,8 @@ public class RoomDao {
         try {
 
             PreparedStatement pr = this.conn.prepareStatement(query);
-            pr.setString(1, room.getHotel_name());
-            pr.setString(2, room.getPension_type());
+            pr.setString(1, room.getPension_type());
+            pr.setString(2, room.getHotel_name());
             pr.setString(3, room.getRoom_type());
             pr.setInt(4, room.getStock());
             pr.setDouble(5, room.getAdult_price());
@@ -132,8 +137,8 @@ public class RoomDao {
             pr.setBoolean(12, room.isKasa());
             pr.setBoolean(13, room.isProjeksiyon());
             pr.setInt(14, room.getHotel_id());
-
             pr.setInt(15, room.getRoom_id());
+
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -141,7 +146,7 @@ public class RoomDao {
         return true;
     }
 
-    public boolean delete(int room_id) {
+    public boolean delete(int room_id) {  //Belirli bir oda kaydını veritabanından siler.
         String query = "DELETE FROM public.room WHERE room_id = ?";
         try {
             PreparedStatement pr = this.conn.prepareStatement(query);
@@ -153,7 +158,7 @@ public class RoomDao {
         return true;
     }
 
-    public Room getById(int id) {
+    public Room getById(int id) {  //Belirli bir oda ID'sine göre oda bilgilerini getirir.
         Room obj = null;
         String query = "SELECT * FROM public.room WHERE room_id = ?";
         try {
@@ -169,7 +174,7 @@ public class RoomDao {
         return obj;
     }
 
-    public ArrayList<Room> selectByQuery(String query) {
+    public ArrayList<Room> selectByQuery(String query) {  // Belirli bir sorguya göre odaları getirir.
         ArrayList<Room> roomList = new ArrayList<>();
         try {
             ResultSet rs = this.conn.createStatement().executeQuery(query);
@@ -182,11 +187,11 @@ public class RoomDao {
         return roomList;
     }
 
-    public void updateStock(int roomId,int roomCount) {
+    public void updateStock(int roomId, int roomCount) {
         String updateQuery = "UPDATE public.room SET stock = stock + ? WHERE room_id = ?";
 
         try {
-            // Stok azaltma işlemi yap
+            // Stok azaltma işlemi yapar
             PreparedStatement updateStatement = this.conn.prepareStatement(updateQuery);
             updateStatement.setInt(1, roomCount);
             updateStatement.setInt(2, roomId);
@@ -197,5 +202,27 @@ public class RoomDao {
         }
     }
 
+    public List<Room> getRoomsByHotelId(int hotelId) {
+        List<Room> rooms = new ArrayList<>();
+        try {
+            // Veritabanından otel id ye göre odaları sorgular
+            PreparedStatement statement = this.conn.prepareStatement("SELECT * FROM room WHERE hotel_id = ?");
+            statement.setInt(1, hotelId);
+            ResultSet resultSet = statement.executeQuery();
+            // Sorgu sonucunda dönen odaları listeye ekler
+            while (resultSet.next()) {
+                Room room = new Room();
+                room.setRoom_id(resultSet.getInt("room_id"));
+                rooms.add(room);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Hata durumunda boş bir liste döndürür
+            return rooms;
+        }
+        // Odaları içeren listeyi döndürür
+        return rooms;
+
+    }
 }
 

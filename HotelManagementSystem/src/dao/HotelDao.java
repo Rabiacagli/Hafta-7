@@ -15,7 +15,7 @@ public class HotelDao {
         this.conn = Db.getInstance();
     }
 
-    public ArrayList<Hotel> findAll() {
+    public ArrayList<Hotel> findAll() {          // Tüm otelleri veritabanında bulur ve SQL sorgularıyla bir liste olarak döndürür
         ArrayList<Hotel> hotelList = new ArrayList<>();
         String query = "SELECT * FROM public.hotel ORDER BY hotel_id ASC";
         try {
@@ -29,6 +29,8 @@ public class HotelDao {
         return hotelList;
     }
 
+
+    // bir ResultSet nesnesinden veritabanından alınan otel bilgilerini kullanarak bir Hotel nesnesi oluşturmak ve döndürmektir.
     public Hotel match(ResultSet rs) throws SQLException {
         Hotel obj = new Hotel();
         obj.setId(rs.getInt("hotel_id"));
@@ -49,7 +51,7 @@ public class HotelDao {
 
     }
 
-    public boolean save(Hotel hotel) {
+    public boolean save(Hotel hotel) {  //Yeni bir otel kaydı ekler.
         String query = "INSERT INTO public.hotel " +
                 "(" +
                 "hotel_name," +
@@ -89,7 +91,7 @@ public class HotelDao {
         return true;
     }
 
-    public boolean update(Hotel hotel) {
+    public boolean update(Hotel hotel) {    //Mevcut bir otel kaydını günceller.
         String query = "UPDATE public.hotel SET " +
                 "hotel_name = ? ," +
                 "hotel_address = ? , " +
@@ -130,7 +132,7 @@ public class HotelDao {
         return true;
     }
 
-    public boolean delete(int hotel_id) {
+    public boolean delete(int hotel_id) {  // Belirtilen bir otel id'sine sahip otel kaydını siler
         String query = "DELETE FROM public.hotel WHERE hotel_id = ?";
         try {
             PreparedStatement pr = this.conn.prepareStatement(query);
@@ -142,7 +144,7 @@ public class HotelDao {
         return true;
     }
 
-    public Hotel getById(int id) {
+    public Hotel getById(int id) { //Belirtilen bir otel id'sine sahip otelin tüm bilgilerini getirir.
         Hotel obj = null;
         String query = "SELECT * FROM public.hotel WHERE hotel_id = ?";
         try {
@@ -157,7 +159,7 @@ public class HotelDao {
         }
         return obj;
     }
-    public String getByName(int id) {
+    public String getByName(int id) {     //Belirtilen bir otel id'sine sahip otelin adını getirir.
         String hotelName = null;
         String query = "SELECT hotel_name FROM public.hotel WHERE hotel_id = ?";
         try {
@@ -173,7 +175,7 @@ public class HotelDao {
         return hotelName;
     }
 
-    public int getByHotelId(String hotelName) {
+    public int getByHotelId(String hotelName) {  // Belirtilen bir otel adına sahip otel id'sini getirir.
         int hotelId = 0;
         String query = "SELECT hotel_id FROM public.hotel WHERE hotel_name = ?";
         try {
@@ -189,7 +191,7 @@ public class HotelDao {
         return hotelId;
     }
 
-    public List<String> getTumOtelIsimleri() {
+    public List<String> getAllHotelsName() {    //Tüm otel adlarını bir listede döndürür.
         List<String> otelIsimleri = new ArrayList<>();
         String query = "SELECT hotel_name FROM public.hotel";  // Uyarlanmış sorgu
 

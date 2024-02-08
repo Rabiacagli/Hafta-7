@@ -26,8 +26,8 @@ public class HotelView extends Layout {
     private JComboBox cmb_hotel_star;
     private JLabel lbl_hotelname;
     private JLabel lbl_hotelmail;
-    private JLabel lbl_hoteltel;
-    private JLabel lbl_hoteladres;
+    private JLabel lbl_hotel_prhone;
+    private JLabel lbl_hoteladdress;
     private JLabel lbl_star;
 
     private Hotel hotel;
@@ -35,6 +35,9 @@ public class HotelView extends Layout {
 
 
 
+    //Otel bilgilerini görüntülemek ve düzenlemek için bir HotelView örneği oluşturulur.
+    // Verilen Hotel nesnesi üzerinden otel bilgileri alınır ve GUI bileşenlerine yerleştirilir.
+    // Eğer otel bir veritabanında mevcutsa, otel bilgileri GUI bileşenlerine yerleştirilir.
     public HotelView(Hotel hotel) {
         this.hotel = hotel;
         this.hotelManager = new HotelManager();
@@ -58,6 +61,9 @@ public class HotelView extends Layout {
             this.btn_roomsrvc.setSelected(this.hotel.isRoomService());
         }
 
+        //Kaydet butonuna basıldığında, GUI'deki alanlardan otel bilgileri alınır ve bu bilgiler Hotel nesnesine atanır.
+        // Daha sonra bu bilgilerin doğruluğu kontrol edilir ve gerekirse kullanıcıya bir mesaj gösterilir.
+        // Son olarak, değişiklikler veritabanında güncellenir.
         this.btn_save.addActionListener(e -> {
             if (Helper.isFieldListEmpty(new JTextField[]{this.fld_hotelname, this.fld_hoteladres,this.fld_hotelmail,this.fld_hoteltel})) {
                 Helper.showMsg("fill");

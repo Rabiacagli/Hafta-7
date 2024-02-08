@@ -3,7 +3,6 @@ package view;
 import business.HotelManager;
 import business.PensionManager;
 import core.Helper;
-import entity.Hotel;
 import entity.Pension;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ public class PensionView extends Layout {
     private JPanel contanier;
     private JComboBox cmb_pension_type;
     private JButton btn_save;
-    private JLabel lbl_hotelid;
+    private JLabel lbl_hotel_name;
     private JLabel lbl_pension_type;
     private JLabel lbl_top;
     private JTextField fld_hotelid;
@@ -27,6 +26,11 @@ public class PensionView extends Layout {
     private HotelManager hotelManager = new HotelManager();
     private int hotelId;
 
+
+    //Sezon bilgilerini görüntülemek ve düzenlemek için bir PensionView örneği oluşturur.
+    // Verilen Pension nesnesi üzerinden sezon bilgileri alınır ve GUI bileşenlerine yerleştirilir.
+    // Ayrıca, mevcut otellerin isimlerini bir liste olarak alır ve bu isimleri bir combo kutusuna yerleştirir.
+    // Kullanıcı, bu combo kutusundan otel seçerse, otelin id"sini alır ve ilgili sezonun otel id"sine atanmasını sağlar
     public PensionView(Pension pension) {
 
         this.pension = pension;
@@ -34,14 +38,14 @@ public class PensionView extends Layout {
         this.add(contanier);
         this.guiInitiliaze(300, 300);
 
-        List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
-        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
+        List<String> hotelsName = hotelManager.getAllHotelsName();
+        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(hotelsName.toArray(new String[0])));
 
         cmb_hotel_name.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                String secilenOtelAdi = (String) cmb_hotel_name.getSelectedItem();
-                hotelId = hotelManager.getByHotelId(secilenOtelAdi);
+                String selectedHotelsName = (String) cmb_hotel_name.getSelectedItem();
+                hotelId = hotelManager.getByHotelId(selectedHotelsName);
             }
         });
 

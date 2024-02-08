@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font size="14" style="1"/>
-          <text value="Otel Kaydet / Düzenle"/>
+          <text value=" Add and Edit Hotel"/>
         </properties>
       </component>
       <vspacer id="2c7c1">
@@ -35,7 +35,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Otel Adı"/>
+              <text value="Hotel's Name"/>
             </properties>
           </component>
           <vspacer id="e82c5">
@@ -67,12 +67,12 @@
             </constraints>
             <properties/>
           </component>
-          <component id="62266" class="javax.swing.JLabel" binding="lbl_hoteltel">
+          <component id="62266" class="javax.swing.JLabel" binding="lbl_hotel_prhone">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Telefon"/>
+              <text value="Phone"/>
             </properties>
           </component>
           <component id="1e8b3" class="javax.swing.JTextField" binding="fld_hoteltel">
@@ -83,12 +83,12 @@
             </constraints>
             <properties/>
           </component>
-          <component id="1f9fb" class="javax.swing.JLabel" binding="lbl_hoteladres">
+          <component id="1f9fb" class="javax.swing.JLabel" binding="lbl_hoteladdress">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Adres"/>
+              <text value="Address"/>
             </properties>
           </component>
           <component id="10101" class="javax.swing.JTextField" binding="fld_hoteladres">
@@ -104,7 +104,7 @@
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Yıldız"/>
+              <text value="Star"/>
             </properties>
           </component>
           <component id="43847" class="javax.swing.JComboBox" binding="cmb_hotel_star">
@@ -137,7 +137,7 @@
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="Otopark"/>
+              <text value="Parking"/>
             </properties>
           </component>
           <vspacer id="de6b">
@@ -160,7 +160,7 @@
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="Yüzme Havuzu"/>
+              <text value="Pool"/>
             </properties>
           </component>
           <component id="c75aa" class="javax.swing.JRadioButton" binding="btn_fitness">
@@ -168,7 +168,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Spor Salonu"/>
+              <text value="Fitness"/>
             </properties>
           </component>
           <component id="5c402" class="javax.swing.JRadioButton" binding="btn_concierge">
@@ -192,7 +192,7 @@
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Kaydet"/>
+              <text value="Save"/>
             </properties>
           </component>
           <component id="72b3a" class="javax.swing.JRadioButton" binding="btn_roomsrvc">
@@ -200,7 +200,7 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Oda Servisi"/>
+              <text value="Room Service"/>
             </properties>
           </component>
         </children>

@@ -23,9 +23,9 @@ public class AdminView extends Layout {
     private JLabel lbl_pass;
     private JScrollPane scl_left;
     private JComboBox cmb_filter_role;
-    private JButton btn_ara;
+    private JButton btn_search;
     private JButton btn_reset;
-    private JButton araButton;
+
     private User user;
     private UserManager userManager;
     private DefaultTableModel tmdl_user = new DefaultTableModel();
@@ -42,7 +42,7 @@ public class AdminView extends Layout {
             dispose();
         }
 
-        this.lbl_welcome.setText("Hoşgeldiniz " + this.user.getUsername());
+        this.lbl_welcome.setText("Welcome " + this.user.getUsername());
 
         //User
         loadUserTable(null);
@@ -79,7 +79,7 @@ public class AdminView extends Layout {
             }
         });
 
-        btn_ara.addActionListener(new ActionListener() {
+        btn_search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String role = (String) cmb_filter_role.getSelectedItem();
@@ -105,7 +105,7 @@ public class AdminView extends Layout {
     }    // Değerlendirme 7
 
     public void loadUserTable(ArrayList<Object[]> UserList) {
-        this.col_user = new Object[] {"ID", "Kullanıcı Adı", "Parola", "Rol"};
+        this.col_user = new Object[] {"ID", "Username", "Password", "Role"};
         ArrayList<Object[]> userList = this.userManager.getForTable(col_user.length);
         this.createTable(this.tmdl_user, this.tbl_user, col_user, userList);
     } // Kullanıcı tablosu
@@ -115,7 +115,7 @@ public class AdminView extends Layout {
 
         this.user_menu = new JPopupMenu();
 
-        this.user_menu.add("Güncelle").addActionListener(e -> {
+        this.user_menu.add("Update").addActionListener(e -> {
             int selectUserId = this.getTableSelectedRow(this.tbl_user, 0);
             UserView userView = new UserView(this.userManager.getById(selectUserId));
             userView.addWindowListener(new WindowAdapter() {
@@ -125,7 +125,7 @@ public class AdminView extends Layout {
                 }
             });
         });
-        this.user_menu.add("Sil").addActionListener(e -> {
+        this.user_menu.add("Delete").addActionListener(e -> {
             if (Helper.confirm("sure")) {
                 int selectUserId = this.getTableSelectedRow(this.tbl_user, 0);
                 if (this.userManager.delete(selectUserId)) {

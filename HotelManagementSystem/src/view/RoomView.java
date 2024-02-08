@@ -5,7 +5,6 @@ import business.PensionManager;
 import business.RoomManager;
 import business.SeasonManager;
 import core.Helper;
-import dao.HotelDao;
 import entity.Hotel;
 import entity.Pension;
 import entity.Room;
@@ -26,7 +25,7 @@ public class RoomView extends Layout {
     private JRadioButton btn_minibar;
     private JRadioButton btn_konsol;
     private JRadioButton btn_kasa;
-    private JRadioButton btn_projeksiyon;
+    private JRadioButton btn_projection;
     private JButton btn_save;
     private JTextField fld_adult_price;
     private JTextField fld_child_price;
@@ -40,7 +39,7 @@ public class RoomView extends Layout {
     private JLabel lbl_adult_price;
     private JLabel lbl_child_price;
     private JLabel lbl_bed_capacity;
-    private JTextField fld_metrekare;
+    private JTextField fld_meters;
     private JLabel lbl_square;
     private JComboBox cmb_room_type;
     private JComboBox cmb_hotel_name;
@@ -72,20 +71,20 @@ public class RoomView extends Layout {
 
 
 
-        List<String> otelIsimleri = hotelManager.getTumOtelIsimleri();
-        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(otelIsimleri.toArray(new String[0])));
+        List<String> hotelsNames = hotelManager.getAllHotelsName();
+        cmb_hotel_name.setModel(new DefaultComboBoxModel<>(hotelsNames.toArray(new String[0])));
 
 
         cmb_hotel_name.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String secilenOtelAdi = (String) cmb_hotel_name.getSelectedItem();
-                int hotelId = hotelManager.getByHotelId(secilenOtelAdi);
+                String selectedHotelsName = (String) cmb_hotel_name.getSelectedItem();
+                int hotelId = hotelManager.getByHotelId(selectedHotelsName);
 
                 // Seçilen otel için ait olan pensionları cmb_hotel_pension'a ekle
-                ArrayList<String> pensionlar = pensionManager.getOteleAitPensionlar(hotelId);
-                cmb_hotel_pension.setModel(new DefaultComboBoxModel<>(pensionlar.toArray(new String[0])));
+                ArrayList<String> pensions = pensionManager.getHotelsPensions(hotelId);
+                cmb_hotel_pension.setModel(new DefaultComboBoxModel<>(pensions.toArray(new String[0])));
             }
         });
 
@@ -98,17 +97,17 @@ public class RoomView extends Layout {
             this.fld_adult_price.setText(String.valueOf(this.room.getAdult_price()));
             this.fld_child_price.setText(String.valueOf(this.room.getChild_price()));
             this.fld_bed_capacity.setText(String.valueOf(this.room.getBed_capacity()));
-            this.fld_metrekare.setText(this.room.getMkare());
+            this.fld_meters.setText(this.room.getMkare());
             this.btn_kasa.setSelected(this.room.isKasa());
             this.btn_konsol.setSelected(this.room.isKonsol());
             this.btn_tv.setSelected(this.room.isTv());
             this.btn_minibar.setSelected(this.room.isMinibar());
-            this.btn_projeksiyon.setSelected(this.room.isProjeksiyon());
+            this.btn_projection.setSelected(this.room.isProjeksiyon());
         }
 
 
         this.btn_save.addActionListener(e -> {
-            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_adult_price, this.fld_child_price, this.fld_bed_capacity, this.fld_metrekare})) {
+            if (Helper.isFieldListEmpty(new JTextField[]{this.fld_adult_price, this.fld_child_price, this.fld_bed_capacity, this.fld_meters})) {
                 Helper.showMsg("fill");
             } else {
                 boolean result;
@@ -122,12 +121,12 @@ public class RoomView extends Layout {
                 this.room.setAdult_price(Double.parseDouble(fld_adult_price.getText()));
                 this.room.setChild_price(Double.parseDouble(fld_child_price.getText()));
                 this.room.setBed_capacity(Integer.parseInt(fld_bed_capacity.getText()));
-                this.room.setMkare(fld_metrekare.getText());
+                this.room.setMkare(fld_meters.getText());
                 this.room.setTv(btn_tv.isSelected());
                 this.room.setMinibar(btn_minibar.isSelected());
                 this.room.setKonsol(btn_konsol.isSelected());
                 this.room.setKasa(btn_kasa.isSelected());
-                this.room.setProjeksiyon(btn_projeksiyon.isSelected());
+                this.room.setProjeksiyon(btn_projection.isSelected());
 
 
 

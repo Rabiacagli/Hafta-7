@@ -8,12 +8,12 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="93b97" class="javax.swing.JLabel" binding="lbl_hotelid">
+      <component id="93b97" class="javax.swing.JLabel" binding="lbl_hotel_name">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Hotel Adı"/>
+          <text value="Hotel's Name"/>
         </properties>
       </component>
       <vspacer id="19292">
@@ -26,7 +26,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Pansiyon Tipleri"/>
+          <text value="Pension Type"/>
         </properties>
       </component>
       <component id="fe929" class="javax.swing.JComboBox" binding="cmb_pension_type">
@@ -35,13 +35,13 @@
         </constraints>
         <properties>
           <model>
-            <item value="Oda Kahvaltı"/>
-            <item value="Ultra Her şey Dahil"/>
-            <item value="Her şey Dahil"/>
-            <item value="Tam Pansiyon"/>
-            <item value="Yarım Pansiyon"/>
-            <item value="Sadece Yatak"/>
-            <item value="Alkol Hariç Full credit"/>
+            <item value="Bed and Breakfast"/>
+            <item value="Ultra All Inklusive"/>
+            <item value="All Inklusive"/>
+            <item value="Full Board"/>
+            <item value="Half Board"/>
+            <item value="Bed Only"/>
+            <item value="Excluding Alcohol Full credit"/>
           </model>
           <toolTipText value=""/>
         </properties>
@@ -51,7 +51,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Kaydet"/>
+          <text value="Save"/>
         </properties>
       </component>
       <component id="967af" class="javax.swing.JLabel" binding="lbl_top">
@@ -60,7 +60,7 @@
         </constraints>
         <properties>
           <font size="14" style="3"/>
-          <text value="Pansiyon Ekle / Düzenle"/>
+          <text value="Add and Edit Pension"/>
         </properties>
       </component>
       <component id="a7106" class="javax.swing.JLabel" binding="lbl_pansion_factor">
@@ -68,7 +68,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Pansiyon Fiyat Etkisi"/>
+          <text value="Pansion Factor"/>
         </properties>
       </component>
       <component id="4adca" class="javax.swing.JTextField" binding="fld_pension_factor">

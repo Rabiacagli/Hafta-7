@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font size="14" style="1"/>
-          <text value="Oda Ekle / Düzenle"/>
+          <text value="Add and Edit Room"/>
         </properties>
       </component>
       <vspacer id="9112b">
@@ -35,7 +35,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Otel Adı"/>
+              <text value="Hotel's Name"/>
             </properties>
           </component>
           <component id="3e7f6" class="javax.swing.JLabel" binding="lbl_pension_type">
@@ -43,7 +43,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Pansiyon Tipi"/>
+              <text value="Pension Type"/>
             </properties>
           </component>
           <component id="5670b" class="javax.swing.JLabel" binding="lbl_room_type">
@@ -51,7 +51,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Oda Tipi"/>
+              <text value="Room Type"/>
             </properties>
           </component>
           <component id="da067" class="javax.swing.JLabel" binding="lbl_stock">
@@ -59,7 +59,7 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Stok"/>
+              <text value="Stock"/>
             </properties>
           </component>
           <component id="54c6f" class="javax.swing.JTextField" binding="fld_stock">
@@ -96,7 +96,7 @@
               <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Konsol"/>
+              <text value="Console"/>
             </properties>
           </component>
           <component id="771d5" class="javax.swing.JComboBox" binding="cmb_room_type">
@@ -139,7 +139,7 @@
               <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Kasa"/>
+              <text value="Safe-Box"/>
             </properties>
           </component>
           <component id="4f217" class="javax.swing.JLabel" binding="lbl_adult_price">
@@ -147,7 +147,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Yetişkin Fiyatı"/>
+              <text value="Price of Adult"/>
             </properties>
           </component>
           <component id="479f9" class="javax.swing.JTextField" binding="fld_adult_price">
@@ -163,7 +163,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Çocuk Fiyatı"/>
+              <text value="Price of Child"/>
             </properties>
           </component>
           <component id="48c83" class="javax.swing.JTextField" binding="fld_child_price">
@@ -179,7 +179,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Yatak Sayısı"/>
+              <text value="Number of Bed"/>
             </properties>
           </component>
           <component id="a21af" class="javax.swing.JTextField" binding="fld_bed_capacity">
@@ -200,7 +200,7 @@
               <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Kaydet"/>
+              <text value="Save"/>
             </properties>
           </component>
           <component id="35122" class="javax.swing.JLabel" binding="lbl_square">
@@ -208,10 +208,10 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Metrekare"/>
+              <text value="Square Meters"/>
             </properties>
           </component>
-          <component id="ff2ad" class="javax.swing.JTextField" binding="fld_metrekare">
+          <component id="ff2ad" class="javax.swing.JTextField" binding="fld_meters">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -219,12 +219,12 @@
             </constraints>
             <properties/>
           </component>
-          <component id="72ddf" class="javax.swing.JRadioButton" binding="btn_projeksiyon">
+          <component id="72ddf" class="javax.swing.JRadioButton" binding="btn_projection">
             <constraints>
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Projeksiyon"/>
+              <text value="Projection"/>
             </properties>
           </component>
         </children>

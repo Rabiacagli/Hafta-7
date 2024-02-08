@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Layout extends JFrame {
+
+    //GUI'nin başlangıç durumunu yapılandırır. Pencere başlığı, boyutu ve kapanma davranışı gibi özellikleri ayarlar.
     public void guiInitiliaze(int width, int height) {
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -19,6 +21,9 @@ public class Layout extends JFrame {
         this.setVisible(true);
     }
 
+    //Bir tablo oluşturur ve tablonun sütunlarını ve satırlarını belirler.
+    // Verilen model, tablo, sütunlar ve satırlar aracılığıyla tabloyu oluşturur ve gösterir.
+    // Bu metot ayrıca tablonun sütun genişliğini ayarlar.
     public void createTable(DefaultTableModel model, JTable table, Object[] columns, ArrayList<Object[]> rows) {
         model.setColumnIdentifiers(columns);
         table.setModel(model);
@@ -38,11 +43,13 @@ public class Layout extends JFrame {
         }
     }
 
+    // Belirtilen indeksteki tablodaki seçili satırın değerini alır.
     public int getTableSelectedRow (JTable table,int index) {
         return Integer.parseInt(table.getValueAt(table.getSelectedRow(), index).toString());
 
     }
 
+    //Fare hareketlerini dikkate alır, tıklanan satırı seçer ve vurgular.
     public void tableSelectedRow(JTable jtable) {
         jtable.addMouseListener(new MouseAdapter() {
             @Override
@@ -51,8 +58,6 @@ public class Layout extends JFrame {
                 jtable.setRowSelectionInterval(selectedRow, selectedRow);
             }
         });
-
-
 
     }
 }
