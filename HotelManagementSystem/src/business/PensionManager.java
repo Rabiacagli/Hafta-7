@@ -42,7 +42,7 @@ public class PensionManager {
         return this.pensionDao.findAll();
     }
 
-    public boolean save(Pension pension) {         // Helper'dan gelen save metodu
+    public boolean save(Pension pension) {         // yeni bir pansiyon kaydetme
         if (pension.getPensionId() != 0) {
             Helper.showMsg("error");
         }
@@ -53,14 +53,14 @@ public class PensionManager {
         return this.pensionDao.getById(id);
     }
 
-    public boolean update(Pension pension) {   // Helper'dan gelen update metodu
+    public boolean update(Pension pension) {   // var olan pansiyonu güncelleme
         if (this.getById(pension.getPensionId()) == null) {
             Helper.showMsg("notfound");
         }
         return this.pensionDao.update(pension);
     }
 
-    public boolean delete(int id) {      // Helper'dan gelen delete metodu
+    public boolean delete(int id) {      // pansiyon silme
         if (this.getById(id) == null) {
             Helper.showMsg("notfound");
             return false;
@@ -68,7 +68,7 @@ public class PensionManager {
         return this.pensionDao.delete(id);
     }
 
-    //belirli bir otel id'ye sahip olan otelin sahip olduğu pansiyonların listesini döndürmektir.
+    //belirli bir otel id'ye sahip olan otelin sahip olduğu pansiyonların listesini döndürür.
     public ArrayList<String> getHotelsPensions(int hotelId ){
         return this.pensionDao.getHotelsPensions(hotelId);
     }

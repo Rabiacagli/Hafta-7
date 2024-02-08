@@ -62,14 +62,14 @@ public class HotelManager {
         return this.hotelDao.getByHotelId(hotelName);
     }
 
-    public boolean update(Hotel hotel) {     // Helper sınıfından gelen update metodu
+    public boolean update(Hotel hotel) {     // otel güncelleme
         if (this.getById(hotel.getId()) == null) {
             Helper.showMsg("notfound");
         }
         return this.hotelDao.update(hotel);
     }
 
-    public boolean delete(int id) {      // Helper sınıfından gelen delete metodu
+    public boolean delete(int id) {      // otel silme
         if (this.getById(id) == null) {
             Helper.showMsg("notfound");
             return false;
